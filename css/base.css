@@ -1,0 +1,92 @@
+body {
+	max-width: 1024px;
+	margin-left: 300px;
+	font-size: 13px;
+}
+
+#container {
+	position: relative;
+	width: 990px;
+	height: 740px;
+	border: 1px #666 solid;
+	margin: 10px 0;
+}
+
+.data-input {
+	position: fixed;
+	top: 0;
+	left: 0;
+	font-size: 12px;
+}
+
+.data-input ul {
+	list-style: none;
+	padding: 0;
+	margin: 10px 0 0 10px;
+}
+
+.data-input ul li {
+	margin: 2px 0;
+}
+
+.data-input input {
+	width: 100px;
+}
+
+.tech-bar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 9;
+	font-family: 'tahoma', 'arial';
+}
+
+.drawing {
+	position: absolute;
+	right: 0;
+}
+
+.title-bar {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
+.title-bar table {
+	width: 480px;
+	height: 140px;
+	border: 1px #ccc solid;
+}
+
+.big-font {
+	font-family: 'tahoma', 'Microsoft Yahei';
+	font-size: x-large;
+}
+
+.item-title {
+	column-span: 4;
+	text-align: center;
+}
+
+table {
+	border: 1px #000 solid;
+	border-collapse: collapse;
+}
+
+table tr {
+	border: 1px #ccc solid;
+}
+
+table td, th {
+	padding: 3px;
+	text-align: center;
+	border: 1px #ccc solid;
+}
+
+.blank {
+	color: transparent;
+}
+
+[v-cloak] {
+	display: none;
+}
