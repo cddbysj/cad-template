@@ -1,166 +1,190 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="stylesheet" type="text/css" href="css/base.css">
-	<title>CAD图纸生成器</title>
-</head>
-<body>
-	<div id="container" v-cloak>
-		<div class="data-input">
-			<ul>
-				<li>
-					<label for="dnWater">切换口径</label>
-					<select v-model="dnWater" name="dnWater">
-						<option v-for="d in dnWaterList">{{ d }}</option>
-					</select>
-				</li>
-				<li>
-					<label for="dnSteam">蒸汽管口</label>
-					<select v-model="dnSteam" name="dnSteam">
-						<option v-for="d in dnSteamList">{{ d }}</option>
-					</select>
-				</li>
-				<li>
-					<label for="pLevel">公称压力</label>
-					<select v-model="pLevel" name="pLevel">
-						<option v-for="l in pLevelList">{{ l }}</option>
-					</select>
-				</li>
-				<li>
-					<label for="flangeStd">法兰标准</label>
-					<select v-model="flangeStd">
-						<option v-for="s in flangeStdList">{{ s }}</option>
-					</select>
-				</li>
-				<li>
-					<label for="steamP">蒸汽压力</label>
-					<input v-model="steamP" type="text" name="steamP">
-				</li>
-				<li>
-					<label for="steamT">蒸汽温度</label>
-					<input v-model="steamT" type="text" name="steamT">
-				</li>
-				<li>
-					<label for="tGap">加热温差</label>
-					<input v-model="tGap" type="text" name="tGap">
-				</li>
-				<li>
-					<label for="waterQ">水的流量</label>
-					<input v-model="waterQ" type="text" name="waterQ">
-				</li>
-				<li>
-					<label for="material">设备材质</label>
-					<select v-model="material">
-						<option v-for="m in materialList">{{ m }}</option>
-					</select>
-				</li>
-			</ul>
-		</div>
-		<div class="tech-bar">
-			<table>
-				<tr>
-					<th colspan="4" class="item-title">技术参数</th>
-				</tr>
-				<tr>
-					<th>设计规范</th>
-					<td colspan="3">GB/T 7660-1995</td>
-				</tr>
-				<tr>
-					<th>安装方式</th>
-					<td colspan="3">水平/垂直</td>
-				</tr>
-				<tr>
-					<th>设计压力</th>
-					<td colspan="3">1.6 MPa</td>
-				</tr>
-				<tr>
-					<th>蒸汽压力</th>
-					<td colspan="3">{{ steamP }} MPa</td>
-				</tr>
-				<tr>
-					<th>蒸汽温度</th>
-					<td colspan="3">{{ steamT }} &#176;C</td>
-				</tr>
-				<tr>
-					<th>加热温差</th>
-					<td colspan="3">{{ tGap }} &#176;C</td>
-				</tr>
-				<tr>
-					<th>水的流量</th>
-					<td colspan="3">{{ waterQ }} t/h</td>
-				</tr>
-				<tr>
-					<th>设备材质</th>
-					<td colspan="3">{{ material }}</td>
-				</tr>
-				<tr>
-					<th colspan="4" class="item-title">管口规格</th>
-				</tr>
-				<tr>
-					<th>序号</th>
-					<th>规格</th>
-					<th>连接标准</th>
-					<th>用途</th>
-				</tr>
-				<tr>
-					<td>R1</td>
-					<td>DN{{ dnWater }}-PN{{ pLevel }}</td>
-					<td>{{ flangeStd }}</td>
-					<td>进水口</td>
-				</tr>
-				<tr>
-					<td>R2</td>
-					<td>DN{{ dnSteam }}-PN{{ pLevel }}</td>
-					<td>{{ flangeStd }}</td>
-					<td>蒸汽口</td>
-				</tr>
-				<tr>
-					<td>R3</td>
-					<td>DN{{ dnWater }}-PN{{ pLevel }}</td>
-					<td>{{ flangeStd }}</td>
-					<td>出水口</td>
-				</tr>
-			</table>
-		</div>
-		<div class="drawing">
-			<img :src="imgSrc">
-		</div>
-		<div class="title-bar">
-			<table>
-				<tr>
-					<td class="big-font" rowspan="2" colspan="3"><b>{{ modelName }}</b></td>
-					<td>比例</td>
-					<td>材料</td>
-					<td>数量</td>
-					<td>图号</td>
-				</tr>
-				<tr>
-					<td class="blank">空缺</td>
-					<td class="blank">空缺</td>
-					<td class="blank">空缺</td>
-					<td class="blank">空缺</td>
-				</tr>
-				<tr>
-					<td>制图</td>
-					<td class="blank">姓名</td>
-					<td class="blank">日期</td>
-					<td class="big-font" rowspan="2" colspan="4"><b>西门机电科技有限公司</b></td>
-				</tr>
-				<tr>
-					<td>审核</td>
-					<td class="blank">姓名</td>
-					<td class="blank">日期</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<script src="js/lib/vue.js"></script>
-	<script src="js/lib.vue.min.js"></script>
-	<script src="js/main.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="stylesheet" type="text/css" href="css/base.css" />
+    <title>CAD图纸生成器</title>
+  </head>
+  <body>
+    <div id="container" v-cloak>
+      <div class="data-input">
+        <ul>
+          <li>
+            <label for="dn">当量口径</label>
+            <select v-model="dn" name="dn">
+              <option v-for="d in dnWaterList">{{ d }}</option>
+            </select>
+          </li>
+          <li>
+            <label for="dn">型式</label>
+            <select v-model="model" name="model">
+              <option v-for="m in modelList">{{ m }}</option>
+            </select>
+          </li>
+          <li>
+            <label for="dnWater">水管口径</label>
+            <select v-model="dnWater" name="dnWater">
+              <option v-for="d in dnWaterList">{{ d }}</option>
+            </select>
+          </li>
+          <li>
+            <label for="dnSteam">蒸汽管口</label>
+            <select v-model="dnSteam" name="dnSteam">
+              <option v-for="d in dnSteamList">{{ d }}</option>
+            </select>
+          </li>
+          <li>
+            <label for="pLevel">公称压力</label>
+            <select v-model="pLevel" name="pLevel">
+              <option v-for="l in pLevelList">{{ l }}</option>
+            </select>
+          </li>
+          <li>
+            <label for="flangeStd">法兰标准</label>
+            <select v-model="flangeStd">
+              <option v-for="s in flangeStdList">{{ s }}</option>
+            </select>
+          </li>
+          <li>
+            <label for="steamP">蒸汽压力</label>
+            <input v-model="steamP" type="text" name="steamP" />
+          </li>
+          <li>
+            <label for="steamT">蒸汽温度</label>
+            <input v-model="steamT" type="text" name="steamT" />
+          </li>
+          <li>
+            <label for="tGap">加热温差</label>
+            <input v-model="tGap" type="text" name="tGap" />
+          </li>
+          <li>
+            <label for="waterQ">介质流量</label>
+            <input v-model="waterQ" type="text" name="waterQ" />
+          </li>
+          <li>
+            <label for="waterDetail">介质备注</label>
+            <input v-model="waterDetail" type="text" name="waterDetail" />
+          </li>
+          <li>
+            <label for="material">设备材质</label>
+            <select v-model="material">
+              <option v-for="m in materialList">{{ m }}</option>
+            </select>
+          </li>
+        </ul>
+      </div>
+      <div class="tech-bar">
+        <table>
+          <tr>
+            <th colspan="4" class="item-title">技术参数</th>
+          </tr>
+          <tr>
+            <th>设计规范</th>
+            <td colspan="3">GB/T 7660-1995</td>
+          </tr>
+          <tr>
+            <th>安装方式</th>
+            <td colspan="3">水平/垂直</td>
+          </tr>
+          <tr>
+            <th>设计压力</th>
+            <td colspan="3">1.6 MPa</td>
+          </tr>
+          <tr>
+            <th>蒸汽压力</th>
+            <td colspan="3">{{ steamP }} MPa</td>
+          </tr>
+          <tr>
+            <th>蒸汽温度</th>
+            <td colspan="3">{{ steamT }} &#176;C</td>
+          </tr>
+          <tr>
+            <th>加热温差</th>
+            <td colspan="3">{{ tGap }} &#176;C</td>
+          </tr>
+          <tr>
+            <th>介质流量</th>
+            <td colspan="3">{{ waterQ }} t/h</td>
+          </tr>
+          <tr>
+            <th>介质备注</th>
+            <td colspan="3">{{ waterDetail }}</td>
+          </tr>
+          <tr>
+            <th>设备材质</th>
+            <td colspan="3">{{ material }}</td>
+          </tr>
+          <tr>
+            <th colspan="4" class="item-title">管口规格</th>
+          </tr>
+          <tr>
+            <th>序号</th>
+            <th>规格</th>
+            <th>连接标准</th>
+            <th>用途</th>
+          </tr>
+          <tr>
+            <td>R1</td>
+            <td>DN{{ dnWater }}-PN{{ pLevel }}</td>
+            <td>{{ flangeStd }}</td>
+            <td>进水口</td>
+          </tr>
+          <tr>
+            <td>R2</td>
+            <td>DN{{ dnSteam }}-PN{{ pLevel }}</td>
+            <td>{{ flangeStd }}</td>
+            <td>蒸汽口</td>
+          </tr>
+          <tr>
+            <td>R3</td>
+            <td>DN{{ dnWater }}-PN{{ pLevel }}</td>
+            <td>{{ flangeStd }}</td>
+            <td>出水口</td>
+          </tr>
+        </table>
+      </div>
+      <div class="drawing">
+        <img :src="imgSrc" />
+      </div>
+      <div class="title-bar">
+        <table>
+          <tr>
+            <td class="big-font" rowspan="2" colspan="3">
+              <b>{{ modelName }}</b>
+            </td>
+            <td>比例</td>
+            <td>材料</td>
+            <td>数量</td>
+            <td>图号</td>
+          </tr>
+          <tr>
+            <td class="blank">空缺</td>
+            <td class="blank">空缺</td>
+            <td class="blank">空缺</td>
+            <td class="blank">空缺</td>
+          </tr>
+          <tr>
+            <td>制图</td>
+            <td class="blank">姓名</td>
+            <td class="blank">日期</td>
+            <td class="big-font" rowspan="2" colspan="4">
+              <b>西门机电科技有限公司</b>
+            </td>
+          </tr>
+          <tr>
+            <td>审核</td>
+            <td class="blank">姓名</td>
+            <td class="blank">日期</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script src="js/lib/vue.js"></script>
+    <script src="js/lib.vue.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
